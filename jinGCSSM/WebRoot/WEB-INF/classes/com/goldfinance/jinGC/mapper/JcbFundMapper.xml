@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldfinance.jinGC.mapper.JcbFundMapper">
+	<select id="selectJcbFund" resultType="jcbFund">
+		select * from jcbFund
+	</select>
+	<select id="selectJcbFundByfundcode" parameterType="string" resultType="jcbFund">
+	select * from jcbFund where fundcode =#{fundcode}
+	
+	</select>
+	<select id="selectAll" resultType="jcbFund">
+		select * from jcbFund
+	</select>
+	
+</mapper>

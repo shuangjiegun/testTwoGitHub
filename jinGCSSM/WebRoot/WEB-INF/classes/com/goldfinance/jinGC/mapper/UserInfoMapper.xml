@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldfinance.jinGC.mapper.UserInfoMapper">
+
+	<insert id="insertUserInfo" parameterType="userInfo">
+		INSERT INTO USERINFO (bankCode, bankAccount, capital_mode, userName, client_id, id_kind_gb, id_no, mobile_tel, trade_acco, ta_no, createdatetime) 
+		VALUES (#{bankCode},#{bankAccount}, #{capital_mode}, #{userName}, #{client_id}, #{id_kind_gb},#{id_no},#{mobile_tel},#{trade_acco},#{ta_no},#{createdatetime})
+	</insert>
+	
+	<insert id="insertAccountEmail" parameterType="accountEmail">
+		INSERT INTO accountemail (id_no, ta_acco, apply_date, apply_time, trade_acco, e_mail, client_name, taconfirm_flag, fund_busin_code) 
+		VALUES (#{id_no},#{ta_acco}, #{apply_date}, #{apply_time}, #{trade_acco}, #{e_mail},#{client_name},#{taconfirm_flag},#{fund_busin_code})
+	</insert>
+	
+	<insert id="insertTradeEmail" parameterType="tradeEmail">
+		INSERT INTO tradeemail (apply_date,affirm_date,fund_code,trade_acco,ta_acco,fund_busin_code,net_value,trade_confirm_balance,trade_confirm_type,fare_sx,taconfirm_flag) 
+		VALUES (#{apply_date},#{affirm_date}, #{fund_code}, #{trade_acco}, #{ta_acco}, #{fund_busin_code},#{net_value},#{trade_confirm_balance},#{trade_confirm_type},#{fare_sx},#{taconfirm_flag})
+	</insert>
+	
+	<insert id="insertTradeMessage" parameterType="tradeMessage">
+		INSERT INTO tradeMessage (apply_date,affirm_date,fund_code,target_fund_code,trade_acco,ta_acco,fund_busin_code,net_value,trade_confirm_balance,trade_confirm_type,fail_cause,taconfirm_flag) 
+		VALUES (#{apply_date},#{affirm_date}, #{fund_code}, #{target_fund_code},#{trade_acco}, #{ta_acco}, #{fund_busin_code},#{net_value},#{trade_confirm_balance},#{trade_confirm_type},#{fail_cause},#{taconfirm_flag})
+	</insert>
+	
+	<insert id="insertUserTrade" parameterType="personInfo">
+		INSERT INTO usertrade (id_no, client_name, e_mail, trade_acco) 
+		VALUES (#{id_no},#{client_name}, #{e_mail}, #{trade_acco})
+	</insert>
+	
+	<insert id="insertUserTradeMessage" parameterType="personInfo">
+		INSERT INTO usertrademessage (id_no, client_name, mobile_tel, trade_acco) 
+		VALUES (#{id_no},#{client_name}, #{mobile_tel}, #{trade_acco})
+	</insert>
+	
+	
+	<select id="findAccountEmailDistinctIdNo" parameterType="string" resultType="string">
+	 	SELECT DISTINCT(id_no)  FROM accountemail WHERE e_mail!="" AND apply_date=#{apply_date} 
+	</select>
+	
+	<select id="findTradeEmailUserTradeDistinctIdNo" parameterType="string" resultType="string">
+	 	SELECT DISTINCT(u.id_no) FROM tradeemail t INNER JOIN usertrade u ON t.trade_acco = u.trade_acco WHERE t.affirm_date = #{affirm_date}
+	</select>
+	
+	<select id="findTradeMessageUserTradeMessageDistinctIdNo" parameterType="tradeMessage" resultType="string">
+		SELECT DISTINCT(u.id_no) FROM trademessage t INNER JOIN usertrademessage u ON t.trade_acco = u.trade_acco WHERE t.affirm_date = #{affirm_date} and t.fund_busin_code=#{fund_busin_code}
+	</select>
+	
+	<select id="findTradeEmailDistinctTradeAcco" parameterType="string" resultType="string">
+	 	SELECT DISTINCT(trade_acco)  FROM tradeemail WHERE affirm_date=#{affirm_date} 
+	</select>
+	
+	<select id="findTradeMessageDistinctTradeAcco" parameterType="tradeMessage" resultType="string">
+	 	SELECT DISTINCT(trade_acco)  FROM trademessage WHERE affirm_date=#{affirm_date} AND fund_busin_code=#{fund_busin_code}
+	</select>
+	
+	<select id="findAccountEmailByApplyDateAndIdNo" parameterType="accountEmail" resultType="accountEmail">
+	 	SELECT a.*, s.name fund_busin_code_name FROM accountemail a 
+		INNER JOIN servicecode s ON a.fund_busin_code = s.code WHERE s.type='0' AND s.servicetype='1'
+		 AND apply_date=#{apply_date} AND id_no=#{id_no}
+	</select>
+	
+	<select id="findTradeEmailByAffirmDateAndIdNo" parameterType="tradeEmail" resultType="tradeEmail">
+		SELECT u.id_no, u.client_name, u.e_mail, t.affirm_date, a.fund_name fund_code_name, s.name fund_busin_code_name, t.net_value, t.trade_confirm_balance, t.trade_confirm_type,t.fare_sx, t.taconfirm_flag
+		FROM tradeemail t
+		INNER JOIN allfundproduct a ON t.fund_code = a.fund_code
+		INNER JOIN servicecode s ON t.fund_busin_code =  s.code
+		INNER JOIN usertrade u ON t.trade_acco = u.trade_acco
+		WHERE s.type=1 AND s.servicetype=2 AND a.flag=1 AND t.affirm_date = #{affirm_date} AND u.id_no=#{id_no}
+	</select>
+	
+	<select id="findTradeMessageByAffirmDateAndFundBusinCodeAndIdNo" parameterType="tradeMessage" resultType="tradeMessage">
+	SELECT u.client_name, u.mobile_tel, u.id_no, b1.fund_name fund_code_name, b2.fund_name target_fund_code_name, t.apply_date, t.affirm_date, t.trade_confirm_type, t.trade_confirm_balance, t.net_value,t.taconfirm_flag,t.fail_cause
+	FROM trademessage t
+	LEFT OUTER JOIN (SELECT fund_name,fund_code FROM allfundproduct a1 WHERE a1.flag=1) b1 ON t.fund_code = b1.fund_code
+	LEFT OUTER JOIN (SELECT fund_name,fund_code FROM allfundproduct a2 WHERE a2.flag=1) b2 ON t.target_fund_code = b2.fund_code
+	INNER JOIN usertrademessage u ON t.trade_acco = u.trade_acco
+	WHERE t.affirm_date =#{affirm_date} AND t.fund_busin_code = #{fund_busin_code} AND u.id_no=#{id_no}
+	</select>
+	
+	
+	<select id="findAccountEmailLastestEmail" parameterType="accountEmail" resultType="string">
+	 	SELECT e_mail FROM accountemail WHERE e_mail!="" AND apply_date=#{apply_date} AND id_no=#{id_no} ORDER BY apply_time DESC LIMIT 0,1
+	</select>
+	
+	<select id="findUserTradeByTradeAcco" parameterType="string" resultType="personInfo">
+	 	SELECT * FROM usertrade WHERE trade_acco=#{trade_acco}
+	</select>
+	
+	<select id="findUserTradeMessageByTradeAcco" parameterType="string" resultType="personInfo">
+	 	SELECT * FROM usertrademessage WHERE trade_acco=#{trade_acco}
+	</select>
+	
+	<select id="findAccountEmailRecordList" parameterType="string" resultType="accountEmail">
+	 	SELECT * FROM accountemail WHERE  apply_date=#{apply_date}
+	</select>
+	
+	<select id="findTradeEmailRecordList" parameterType="string" resultType="tradeEmail">
+	 	SELECT * FROM tradeemail WHERE  affirm_date=#{affirm_date}
+	</select>
+	
+	<select id="findTradeMessageRecordList" parameterType="tradeMessage" resultType="tradeMessage">
+	 	SELECT * FROM tradeMessage WHERE  affirm_date=#{affirm_date} and fund_busin_code=#{fund_busin_code}
+	</select>
+	
+
+	<!--   <select id="findUserInfoByNumAndType" parameterType="userInfo" resultType="userInfo">
+		SELECT * FROM USERINFO WHERE (id_kind_gb=#{id_kind_gb} and id_no=#{id_no}) or (id_kind_gb=#{id_kind_gb} and mobile_tel=#{mobile_tel})
+	</select> -->
+	
+	<!-- 查询用户的总交易账户数 -->
+	<select id="findDistinctTradeAccoNumber" parameterType="userInfo" resultType="int">
+	 	SELECT COUNT(DISTINCT(trade_acco))  FROM userinfo WHERE id_kind_gb=#{id_kind_gb} AND id_no=#{id_no}
+	</select>
+	
+	<!-- 查询用户针对某家TA公司的开户信息 -->
+	<select id="findTACompanyOpenAccoInfo" parameterType="userInfo" resultType="userInfo">
+	 	SELECT u.bankCode, u.bankAccount, b.bankabbrName, u.capital_mode, u.userName, u.client_id, u.id_kind_gb, u.id_no, u.mobile_tel, u.trade_acco, u.ta_no 
+		FROM userinfo u , bank b
+				<where>
+							<if test=" !id_kind_gb.equals('') ">
+								AND u.id_kind_gb=#{id_kind_gb}
+							</if>
+							<if test=" !id_no.equals('') ">
+							   AND u.id_no=#{id_no}  
+							</if>
+							<if test=" !ta_no.equals('') ">
+								AND u.ta_no=#{ta_no}
+							</if>
+								AND u.bankcode=b.bankcode
+				</where>	
+	</select>
+	
+		<select id="findUserInfo" parameterType="userInfo" resultType="userInfo">
+			SELECT * FROM USERINFO WHERE bankCode=#{bankCode} and bankAccount=#{bankAccount} and id_no=#{id_no} 
+		</select>
+		
+		<select id="findUserInfoByClientId" parameterType="userInfo" resultType="userInfo">
+			SELECT u.*, b.bankabbrname FROM USERINFO u, bank b WHERE u.bankcode=b.bankcode AND client_id=#{client_id} 
+		</select>
+		
+		<select id="findDistinctBankAccount" parameterType="userInfo" resultType="userInfo">
+			SELECT DISTINCT u.bankcode, u.bankaccount , u.trade_acco, b.bankabbrname  FROM userinfo u ,bank b WHERE u.bankcode=b.bankcode AND u.client_id=#{client_id} 
+		</select>
+	
+		<delete id="deleteAccountEmailRecordList" parameterType="string">
+			delete from accountemail where apply_date = #{apply_date}
+		</delete>
+		
+		<delete id="deleteTradeEmailRecordList" parameterType="string">
+			delete from tradeemail where affirm_date = #{affirmDate}
+		</delete>
+		
+		<delete id="deleteTradeMessageRecordList" parameterType="tradeMessage" >
+			delete from tradeMessage where affirm_date=#{affirm_date} and fund_busin_code=#{fund_busin_code}
+		</delete>
+		
+		<delete id="deleteUserTradeMessageByTradeAcco" parameterType="string" >
+			delete from usertrademessage where trade_acco=#{trade_acco}
+		</delete>
+		
+		<delete id="deleteUserTradeByTradeAcco" parameterType="string" >
+			delete from usertrade where trade_acco=#{trade_acco}
+		</delete>
+		
+		<delete id="deleteUserInfoByClientId" parameterType="string" >
+			delete from userinfo where client_id=#{client_id}
+		</delete>
+		
+		
+		
+		
+</mapper>

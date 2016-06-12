@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.goldfinance.jinGC.mapper.LogMapper">
+
+	<insert id="insertLog" parameterType="log">
+		INSERT INTO LOG (userId, operate,  moneyAmount, result, detail, createdatetime)
+		VALUES (#{userId}, #{operate}, #{moneyAmount}, #{result}, #{detail}, #{createdatetime})
+	</insert>
+	<select id="selectTimeByUserId" parameterType="user" resultType="log">
+		
+		SELECT * from log  where  userId =#{id_no} ORDER BY createdatetime DESC LIMIT 1, 1
+	
+	</select>
+	
+</mapper>

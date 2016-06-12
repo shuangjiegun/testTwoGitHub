@@ -1,0 +1,187 @@
+﻿@charset "utf-8";
+/*global*/
+body {
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif,"宋体";
+	color:#333;
+	margin:0px;
+	padding:0px;
+	text-decoration:none;
+	background: #fff;
+}
+* {	margin:0px;
+	padding:0px;
+}
+html {
+	overflow-y: scroll;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size: 14px;
+}
+img, form {
+	border:0px;
+}
+img {
+	vertical-align:middle;
+}
+table {
+	border-collapse:collapse;
+}
+ul, li {
+	list-style:none;
+}
+i, em, cite {
+	font-style:normal;
+}
+a {
+	color:#333;
+	text-decoration:none;
+}
+a:hover {
+	color:#666;
+	text-decoration:none;
+}
+a:visited {
+	color:#666;
+	text-decoration:underline;
+}
+textarea {
+	font-size:12px;
+	line-height:18px;
+	color:#333;
+	padding:3px 5px;
+}
+select,input,textarea {
+	outline: none;
+}
+input{ vertical-align:middle;}
+
+/*all*/
+.cl {
+	clear:both;
+}
+.fl {
+	float:left;
+}
+.fr {
+	float:right;
+}
+.txtcenter {
+	text-align:center;
+}
+.txtleft {
+	text-align:left !important;
+}
+.txtright {
+	text-align:right;
+}
+/*pagewidth*/
+.wrapper {
+	width:1200px;
+	margin:0 auto;
+}
+.wrapper * {
+	margin:0px;
+	padding:0px;
+}
+
+	
+/*page*/
+.page {
+	clear:both;
+	overflow:hidden;
+	zoom:1;
+	margin:38px 0 0 0;
+	line-height:16px;
+}
+.page a {
+	display: inline-block;
+	margin:0 2px 0 0;
+	border:1px solid #27acd5;
+	padding:0 5px;
+	color:#333;
+	font-family:Verdana, Geneva, sans-serif;
+	text-decoration:none;
+	cursor:pointer;
+}
+.page i {
+	display: inline-block;
+	margin:0 5px 0;
+	color:#666;
+	font-family:Verdana, Geneva, sans-serif;
+}
+.page a:hover {
+	display: inline-block;
+	border:1px solid #27acd5;
+	color:#fff;
+	background:#27acd5;
+	text-decoration:none;
+}
+.page a.current {
+	display: inline-block;
+	border:1px solid #27acd5;
+	color:#fff;
+	background:#27acd5;
+	text-decoration:none;	
+}
+.page b{ color:#f60;}
+
+
+.tip {
+	width:90%;
+ 	margin:10px auto 10px auto;
+	background:#ffffed; border:1px solid #f7d4a6; font-size:14px; padding:10px 0;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;
+}
+.icon-tip{background:url(../images/tip.png) no-repeat 0 0; width:16px; height:16px; display: inline-block; margin:0 5px -2px 20px;}
+
+.headline{ text-align:center; font-size:22px; margin:20px 0 0 0; font-weight:normal;}
+/* tabbox */
+.tabbox {
+	width:90%;
+	overflow:hidden;
+	position:relative;
+	font-size:12px;	
+ 	margin:0 auto;
+}
+.tabbox .tabbtn {
+	height:37px;
+	border-bottom:2px solid #b78a4f; margin:0 0 0 0; clear:both; overflow:hidden; zoom:1;*padding:0 0 1px 0;
+}
+
+.tabbox .tabbtn li {
+	float:left;
+	position:relative;
+width:128px; height:38px; background:url(../images/tabGraybg.png) no-repeat 0 0; line-height:40px; text-align:center; font-size:16px; color:#333; font-family:"微软雅黑";
+margin:0 5px 0 0;
+cursor: default;
+}
+
+.tabbox .tabbtn li.current {
+ color:#fff; background:url(../images/tabBluebg.png) no-repeat 0 0;
+}
+
+.tabbox .loading {
+ 	text-align:center;
+	position:absolute;
+	left:0;
+	top:30px;
+}
+.tabbox .tabcon { font-size:12px;}
+
+.tabcon form{ margin:10px 0; font-size:14px;}
+.tabcon input[type=text]{ border:1px solid #ccc; padding:2px 0;}
+
+.tabcon table{ font-size:14px;}
+.tabcon th{}
+.tabcon td{text-align:center;padding:6px 0;border:1px solid #ccc;}
+
+/*btn*/
+.btn{border:1px solid #cac5b9;font-family:"Microsoft Yahei";  display:inline-block; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;}
+.btnSend{padding:5px 20px; font-size:16px; background:#ece9e2; color:#963; cursor:pointer;}
+.btnSend:hover{background:#e4cdae; text-decoration:none;}
+
+.btnSearch{padding:1px 20px; font-size:14px; background:#ece9e2; color:#963; cursor:pointer;}
+.btnSearch:hover{background:#e4cdae; text-decoration:none;}
+
+.error{display:inline-block; color:#f00; margin-left:5px;}
+

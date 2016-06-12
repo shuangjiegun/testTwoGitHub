@@ -1,0 +1,16 @@
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://10.0.21.18:3306/ssm
+jdbc.username=root
+jdbc.password=111111
+
+#下面是自己的数据库
+#jdbc.driver=com.mysql.jdbc.Driver
+#jdbc.url=jdbc:mysql:///ssm
+#jdbc.username=root
+#jdbc.password=root
+
+#data Source2
+dataSource2.driver=oracle.jdbc.driver.OracleDriver
+dataSource2.url=jdbc:oracle:thin:@10.0.28.149:1521:WEBDB
+dataSource2.username=jysee
+dataSource2.password=jysee

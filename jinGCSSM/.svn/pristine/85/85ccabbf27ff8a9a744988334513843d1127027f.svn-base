@@ -1,0 +1,69 @@
+# t2 or http
+ufx.protocol=http
+
+# t2 configuration
+#ufx.t2sdk.configLocation=classpath:t2sdk-config.xml
+
+ufx.oauth.grantType=client_credentials
+
+# 自己的Key和Secret
+ufx.oauth.clientType=
+#ufx.oauth.apiKey=39e083fe-5c50-465b-9e7a-a9373c262f1b
+#ufx.oauth.apiSecret=ab13d901-a335-4d25-af1d-0786431f1c6a
+
+#下面是临时使用的Key和Secret
+#ufx.oauth.clientType=
+#ufx.oauth.apiKey=e1ae550b-64e7-457d-b49a-41fe340c75e4 
+#ufx.oauth.apiSecret=afbde69d-b4fa-4e14-82d4-fd0c6387ae05
+#ufx.oauth.apiKey=cc7acb8e-80d0-49e2-b356-26e39d45b1f3
+#ufx.oauth.apiSecret=09462c9b-1be7-4557-b772-7ebb60014549
+
+#12月14日之前备份
+#ufx.oauth.apiKey=39e083fe-5c50-465b-9e7a-a9373c262f1b
+#ufx.oauth.apiSecret=ab13d901-a335-4d25-af1d-0786431f1c6a
+
+ufx.oauth.apiKey=cc7acb8e-80d0-49e2-b356-26e39d45b1f3
+ufx.oauth.apiSecret=09462c9b-1be7-4557-b772-7ebb60014549
+
+#使用者唯一标识  客户端信用模式下为机器标识
+#假生产为01，自用为27
+#ufx.oauth.openId=01
+# 11 外网，12内网，123自己
+ufx.oauth.openId=jgc0102
+
+#ufx.baseUrl=http://121.43.72.32
+#ufx.oauth.accessTokenUrl=http://121.43.72.32/oauth2/oauth2/token
+#ufx.oauth.authorizeUrl=http://121.43.72.32/oauth2/oauth2/authorize
+ufx.oauth.reGainAccessTokenTime = 200
+
+# http client tuning
+http.client.maxConnectTime = 20000
+http.client.maxSocketTime = 50000
+http.client.maxRequestConnectTime = 5000
+http.client.maxTotalConnect = 100
+http.client.maxConnPerRoute = 50
+
+#ufx.baseUrl=https://sandbox.hs.net
+#ufx.oauth.accessTokenUrl=https://sandbox.hs.net/oauth2/oauth2/token
+#ufx.oauth.authorizeUrl=https://sandbox.hs.net/oauth2/oauth2/authorize
+
+#ufx.baseUrl=https://vopen.hs.net
+#ufx.oauth.accessTokenUrl=https://vopen.hs.net/oauth2/oauth2/token
+#ufx.oauth.authorizeUrl=https://vopen.hs.net/oauth2/oauth2/authorize
+
+
+ufx.baseUrl=https://120.55.174.21
+ufx.oauth.accessTokenUrl=https://120.55.174.21/oauth2/oauth2/token
+ufx.oauth.authorizeUrl=https://120.55.174.21/oauth2/oauth2/authorize
+
+
+
+#ufx.extra.param.sendercomp_id=91001
+#ufx.extra.param.targetcomp_id=91000
+
+#12月14日之前备份
+#ufx.extra.param.sendercomp_id=91001
+#ufx.extra.param.targetcomp_id=50030
+
+ufx.extra.param.sendercomp_id=91001
+ufx.extra.param.targetcomp_id=91000
